@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-audio-button-response.js"></script>
+    <script src="jspsych/plugin-preload.js"></script>
+    <script src="jspsych/plugin-audio-keyboard-response.js"></script>
+    <script src="jspsych/plugin-instructions.js"></script>
+    <script src="jspsych/plugin-survey-likert.js"></script>
+    <script src="jspsych/plugin-survey-text.js"></script>
+    <script src="jspsych/plugin-survey-multi-choice.js"></script>
+    <script src="jspsych/plugin-html-button-response.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+    var jsPsych = initJsPsych({
+        show_progress_bar: true,
+        auto_update_progress_bar: false,
+        on_close: function() {
+            jsPsych.data.get().localSave('csv', 'results.csv');
+        }
+      });
+
+
+    // !! CHANGE THIS (to true, false) BEFORE OFFICIALLY RUNNING THE EXPERIMENT !!
+    //variable for going through the test quickly
+    var force_completion = false
+    var skip_melodies = true
+
+
+    //setting up progress bar update func
+    var totalSteps = 26;  // update this as needed
+    var currentStep = 0;
+
+    function updateProgressBar() {
+      currentStep++;
+      jsPsych.setProgressBar(currentStep / totalSteps);
+    }
+
+
+    //preload
+    var preload = {
+    type: jsPsychPreload,
+    auto_preload: true
+    }
+
+    var timeline = [];
+    timeline.push(preload)
+
+
+
+
+    //setting up samples
+    //randomly pick voice
+    var condition_assignment = Math.floor(Math.random() * 4);
+    jsPsych.data.addProperties({
+      condition: condition_assignment
+    });
+
+
+    //folders for the audio files + file names
+    var folders = ['01test', '03policy_adjustments', '04systemic_issues', '05tech_startup', '06retail', '07educational_platform', '08healthcare', '09advocacy', '10electronics', '12game'];
+
+    var sample_names = ['01test_5.5to7.7', '03policy_adjustments_full', '04systemic_issues_full', '05tech_startup_full', '06retail_short_5.1-7.2', '07educational_platform_5.3', '08healthcare_5.4', '09advocacy_5.2', '10electronics_5', '12game_5.4'];
+
+    var nat_files = ['7.wav', '0.wav', '10.wav', '2.wav', '0.wav',  '3.wav', '5.wav', '7.wav', '3.wav', '4.wav'];
+    //(target) rates: 7.74, 4.9, 7.6, 5.402, 5.1, 6.135, 6.89, 7.317, 5.788, 6.564
+
+    var test_folders = ['02platform_interface', '11food'];
+
+    var test_sample_names = ['02platform_interface_full', '11food_5.3']
+
+
+    //samples
+    var kokoro_female = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_kokoro_female.wav`,
+        type: 'stimulus'
+      };
+    });
+
+    var kokoro_male = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_kokoro_male.wav`,
+        type: 'stimulus'
+      };
+    });
+
+    var matcha_female = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_matcha_female.wav`,
+        type: 'stimulus'
+      };
+    });
+
+    var matcha_male = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_matcha_male.wav`,
+        type: 'stimulus'
+      };
+    });
+
+
+    //naturalness
+    var kokoro_female_nat = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_kokoro_female/${nat_files[index]}`,
+        type: 'stimulus'
+      };
+    });
+
+    var kokoro_male_nat = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_kokoro_male/${nat_files[index]}`,
+        type: 'stimulus'
+      };
+    });
+
+    var matcha_female_nat = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_matcha_female/${nat_files[index]}`,
+        type: 'stimulus'
+      };
+    });
+
+    var matcha_male_nat = folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${sample_names[index]}_matcha_male/${nat_files[index]}`,
+        type: 'stimulus'
+      };
+    });
+
+
+    //test
+    var kokoro_female_test = test_folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${test_sample_names[index]}_kokoro_female.wav`,
+        type: 'stimulus'
+      };
+    });
+
+    var kokoro_male_test = test_folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${test_sample_names[index]}_kokoro_male.wav`,
+        type: 'stimulus'
+      };
+    });
+
+    var matcha_female_test = test_folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${test_sample_names[index]}_matcha_female.wav`,
+        type: 'stimulus'
+      };
+    });
+
+    var matcha_male_test = test_folders.map(function(folder, index) {
+      return {
+        file: `samples/${folder}/${test_sample_names[index]}_matcha_male.wav`,
+        type: 'stimulus'
+      };
+    });
+
+
+
+    //melodies
+    var melodies = [
+      'melodies/melody1.mp3', 'melodies/melody2.mp3', 'melodies/melody3.mp3', 'melodies/melody4.mp3', 'melodies/melody5.mp3',
+      'melodies/melody6.mp3', 'melodies/melody7.mp3', 'melodies/melody8.mp3', 'melodies/melody9.mp3', 'melodies/melody10.mp3', 'melodies/melody11.mp3', 'melodies/melody12.mp3'
+    ];
+
+    // melody shuffler
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+    shuffle(melodies);
+    let melody_index = 0;
+
+    
+
+    //start
+    var instructions = {
+    type: jsPsychInstructions,
+    pages: [
+    `
+      <p>Thank you for participating in my experiment!</p>
+
+      <p>Your responses are anonymous and will be used for Master's thesis research.</p>
+
+      Please make sure to follow these instructions:
+      <ul style="list-style-type: none;">
+        <li>Use <strong>headphones</strong> and a <strong>computer</strong> for this test.</li>
+        <li>Do <strong>not</strong> participate if you are <strong>not fluent in English</strong>.</li>
+        <li>Do <strong>not</strong> participate if you have a <strong>hearing impairment</strong>.</li>
+      </ul>
+
+      <p>The experiment has <strong>2 parts</strong>. You will start by answering a few questions on the next page.</p>
+
+      <p>If you encounter any issues, please contact: 
+        <strong>alena.linkova.2983@student.uu.se</strong>
+      </p>
+    `
+    ],
+    show_clickable_nav: true,
+    on_finish: updateProgressBar
+    };
+
+
+    //demographics
+    var demographics = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [
+      {
+        prompt: "Gender:", 
+        name: 'Gender', 
+        options: ['male', 'female', 'non-binary', 'other'], 
+        required: force_completion
+      }, 
+      {
+        prompt: "Age:", 
+        name: 'Age', 
+        options: ['under 18', '18-24', '25-34', '35-44', '45-54','55-64', '65+'], 
+        required: force_completion
+      },
+      {
+        prompt: "Are you a native speaker of English?", 
+        name: 'Native', 
+        options: ['yes', 'no'], 
+        required: force_completion
+      },
+    ],
+    on_finish: updateProgressBar
+    };
+
+    
+    //part1 instructions
+    var instructions2 = {
+    type: jsPsychInstructions,
+    pages: [
+    `
+        <p>Part 1:</p>
+
+        <p>You will hear speech that gradually speeds up. Your task will be to press F at a moment when you would classify the speech as 'fast'.</p>
+
+        <p>There is a short pause after every sample.</p>
+      `, `
+        <p>You will now have two practice runs to get familiar with the experiment setup and adjust your volume if needed.</p>
+
+        <p>Press Next to start the practice round.</p>
+      `
+    ],
+    show_clickable_nav: true,
+    on_finish: updateProgressBar
+    };
+
+
+    //choose the stimulus list based on the condition
+    if (condition_assignment == 0) {
+        stimlist = kokoro_female;
+        nat_stimlist = kokoro_female_nat;
+        test_stimlist = kokoro_female_test;
+    } else if (condition_assignment == 1) {
+        stimlist = kokoro_male;
+        nat_stimlist = kokoro_male_nat;
+        test_stimlist = kokoro_male_test;
+    } else if (condition_assignment == 2) {
+        stimlist = matcha_female;
+        nat_stimlist = matcha_female_nat;
+        test_stimlist = matcha_female_test;
+    } else if (condition_assignment == 3) {
+        stimlist = matcha_male;
+        nat_stimlist = matcha_male_nat;
+        test_stimlist = matcha_male_test;
+    };
+
+
+    //pause screen with music after every sample
+    var continue_screen = {
+    type: jsPsychAudioButtonResponse,
+    stimulus: function() {
+      let selected_melody = melodies[melody_index];
+      melody_index++;
+      return selected_melody;
+    },
+    choices: ['Continue'],
+    prompt: '<p>Click Continue to proceed.</p>',
+    response_allowed_while_playing: skip_melodies,
+    on_finish: updateProgressBar
+    };
+
+
+    //speech rate experiment test run
+    var test_speech_rate = {
+    type: jsPsychAudioKeyboardResponse,
+    stimulus: jsPsych.timelineVariable('file'),
+    prompt: "Press F when you would classify the speech as 'fast'.",
+    choices: ['f'],
+    response_ends_trial: true
+    };
+
+    var test_part_one = {
+    timeline: [test_speech_rate, continue_screen],
+    timeline_variables: test_stimlist,
+    randomize_order: true,
+    repetitions: 1
+    };
+
+    var test_end = {
+    type: jsPsychInstructions,
+    pages: [
+    `
+        <p>The practice round is now complete.</p>
+
+        <p>Press Next when you are ready for the main experiment to begin.</p>
+      `
+    ],
+    show_clickable_nav: true,
+    on_finish: updateProgressBar
+    };
+
+
+    //speech rate experiment
+    var speech_rate = {
+    type: jsPsychAudioKeyboardResponse,
+    stimulus: jsPsych.timelineVariable('file'),
+    prompt: "Press F when you would classify the speech as 'fast'.",
+    choices: ['f'],
+    response_ends_trial: true
+    };
+
+    var part_one = {
+    timeline: [speech_rate, continue_screen],
+    timeline_variables: stimlist,
+    randomize_order: true,
+    repetitions: 1
+    };
+
+    //var getdata = jsPsych.data.get().localSave('csv', 'results.csv');
+
+
+    //naturalness
+    var instructions3 = {
+    type: jsPsychInstructions,
+    pages: [`
+        <p>Part 1 is finished. Good job!</p>
+
+        <p>Now proceed to part 2.</p>
+      `,
+    `
+        <p>Part 2:</p>
+        <p>You will hear a speech sample. Your goal is to rate the naturalness of the speech.</p>
+      `
+    ],
+    show_clickable_nav: true,
+    on_finish: updateProgressBar
+    };
+
+    var likert_scale =[
+    "1", 
+    "2", 
+    "3", 
+    "4", 
+    "5"
+    ];
+
+    var naturalness_trial = {
+      type: jsPsychSurveyLikert,
+      questions: [
+        {
+          prompt: function() {
+            var audio = jsPsych.timelineVariable('file', true);
+            return `
+              <p><audio src="${audio}" autoplay controls></audio></p>
+              <p>Please rate the naturalness of the speech on a scale from 1 (poor) to 5 (excellent).</p>
+            `;
+          },
+          name: 'naturalness_rating',
+          labels: likert_scale,
+          required: force_completion
+        }
+      ],
+      on_finish: updateProgressBar
+    };
+
+    var part_two = {
+      timeline: [naturalness_trial],
+      timeline_variables: nat_stimlist,
+      randomize_order: true,
+      repetitions: 1
+    };
+
+
+    //final text
+    var final = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `<p>You've finished the experiment. Good job, and thanks for participating!</p>
+    <p>Please send a message to <b>alena.linkova.2983@student.uu.se</b> if you encountered any issues.</p>`,
+    choices: "NO_KEYS",
+    on_finish: updateProgressBar
+    };
+
+
+    //push everything to timeline
+    timeline.push(instructions, demographics, instructions2, test_part_one, test_end, part_one, instructions3, part_two, final);
+
+    jsPsych.run(timeline);
+
+    
+    
+  </script>
+</html>

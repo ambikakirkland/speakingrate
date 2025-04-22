@@ -1,0 +1,106 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 69.6308163265306 
+tiers? <exists> 
+size = 1 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "silences" 
+        xmin = 0 
+        xmax = 69.6308163265306 
+        intervals: size = 23 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.3415256203478298 
+            text = "" 
+        intervals [2]:
+            xmin = 0.3415256203478298 
+            xmax = 4.5594738922446725 
+            text = "sounding" 
+        intervals [3]:
+            xmin = 4.5594738922446725 
+            xmax = 5.16517439385671 
+            text = "silent" 
+        intervals [4]:
+            xmin = 5.16517439385671 
+            xmax = 12.489205444182437 
+            text = "sounding" 
+        intervals [5]:
+            xmin = 12.489205444182437 
+            xmax = 13.059869033909658 
+            text = "silent" 
+        intervals [6]:
+            xmin = 13.059869033909658 
+            xmax = 18.937521189998918 
+            text = "sounding" 
+        intervals [7]:
+            xmin = 18.937521189998918 
+            xmax = 19.52679337504333 
+            text = "silent" 
+        intervals [8]:
+            xmin = 19.52679337504333 
+            xmax = 27.04699928697571 
+            text = "sounding" 
+        intervals [9]:
+            xmin = 27.04699928697571 
+            xmax = 27.654880067337313 
+            text = "silent" 
+        intervals [10]:
+            xmin = 27.654880067337313 
+            xmax = 35.71878907097247 
+            text = "sounding" 
+        intervals [11]:
+            xmin = 35.71878907097247 
+            xmax = 36.24603260495958 
+            text = "silent" 
+        intervals [12]:
+            xmin = 36.24603260495958 
+            xmax = 41.931964438701606 
+            text = "sounding" 
+        intervals [13]:
+            xmin = 41.931964438701606 
+            xmax = 42.52743948885175 
+            text = "silent" 
+        intervals [14]:
+            xmin = 42.52743948885175 
+            xmax = 48.23197991791097 
+            text = "sounding" 
+        intervals [15]:
+            xmin = 48.23197991791097 
+            xmax = 48.82745496806111 
+            text = "silent" 
+        intervals [16]:
+            xmin = 48.82745496806111 
+            xmax = 54.73216690103536 
+            text = "sounding" 
+        intervals [17]:
+            xmin = 54.73216690103536 
+            xmax = 55.30283049076258 
+            text = "silent" 
+        intervals [18]:
+            xmin = 55.30283049076258 
+            xmax = 61.959161913458644 
+            text = "sounding" 
+        intervals [19]:
+            xmin = 61.959161913458644 
+            xmax = 62.48330401489289 
+            text = "silent" 
+        intervals [20]:
+            xmin = 62.48330401489289 
+            xmax = 64.47737348826017 
+            text = "sounding" 
+        intervals [21]:
+            xmin = 64.47737348826017 
+            xmax = 65.06974710585745 
+            text = "silent" 
+        intervals [22]:
+            xmin = 65.06974710585745 
+            xmax = 69.26776469850036 
+            text = "sounding" 
+        intervals [23]:
+            xmin = 69.26776469850036 
+            xmax = 69.6308163265306 
+            text = "" 
